@@ -1,0 +1,1 @@
+cmd_/home/sourima/G547/Assignment2/adc_ioctl.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/sourima/G547/Assignment2/adc_ioctl.ko /home/sourima/G547/Assignment2/adc_ioctl.o /home/sourima/G547/Assignment2/adc_ioctl.mod.o ;  true

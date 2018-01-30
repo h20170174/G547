@@ -1,0 +1,1 @@
+cmd_/home/sourima/G547/First_Char_Driver/my_char.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/sourima/G547/First_Char_Driver/my_char.ko /home/sourima/G547/First_Char_Driver/my_char.o /home/sourima/G547/First_Char_Driver/my_char.mod.o ;  true
