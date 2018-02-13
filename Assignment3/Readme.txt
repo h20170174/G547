@@ -1,4 +1,4 @@
-///////////////////////////*********************Readme File for Low Level IO Mapped Access for Timer*************//////////////////////////////
+///////////////////////////*********************Readme File for Low Level IO Mapped Access to Timer*************//////////////////////////////
 
 
 1. In this project a char driver is implemented for accessing timer hardware(PIT 8254)
