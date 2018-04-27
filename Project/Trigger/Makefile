@@ -1,4 +1,4 @@
-obj-m += trig3.o
+obj-m += trig.o
 
 all:
 	make -C /lib/modules/`uname -r`/build M=$(PWD) modules
