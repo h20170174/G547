@@ -7,10 +7,10 @@
 #define F_CPU 16000000L
 #include <util/delay.h>
 
-#define USB_LED_OFF 0
-#define USB_LED_ON  1
-#define USB_LED_OFF1 2
-#define USB_LED_ON1  3
+#define USB_LED_OFF 0 //for LED 1
+#define USB_LED_ON  1 //for LED 1
+#define USB_LED_OFF1 2 //for LED
+#define USB_LED_ON1  3 //for LED
 
 //////////// Connect a LED at pin 14 i.e. PB0////////////////////////
 
