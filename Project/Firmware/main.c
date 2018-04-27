@@ -9,10 +9,10 @@
 
 #define USB_LED_OFF 0 //for LED 1
 #define USB_LED_ON  1 //for LED 1
-#define USB_LED_OFF1 2 //for LED
-#define USB_LED_ON1  3 //for LED
+#define USB_LED_OFF1 2 //for LED 2
+#define USB_LED_ON1  3 //for LED 2
 
-//////////// Connect a LED at pin 14 i.e. PB0////////////////////////
+//////////// Connect LED at pin 14, 15 of ATMEGA8////////////////////////
 
 USB_PUBLIC uchar usbFunctionSetup(uchar data[8]) {
     usbRequest_t *rq = (void *)data; // cast data to correct type
@@ -46,7 +46,8 @@ int main() {
     usbInit();
         
     usbDeviceDisconnect(); // enforce re-enumeration
-    for(i = 0; i<250; i++) { // wait 500 ms
+    for(i = 0; i<250; i++)
+    { // wait 500 ms
         wdt_reset(); 
         _delay_ms(2);
     }
