@@ -7,28 +7,22 @@
 
 #include <linux/usb.h> //for usb stuffs
 #include <linux/slab.h> //for
-
-//#include <linux/workqueue.h> //for work_struct
 #include <linux/leds.h> //for led
 #include <linux/delay.h>
 
 //////////////////////////////////////////////////////////////////////////
-
-//#define MIN(a,b) (((a) <= (b)) ? (a) : (b))
-//#define BULK_EP_OUT 0x01
-//#define BULK_EP_IN 0x82
-//#define MAX_PKT_SIZE 512
 /////////////////////////////////////////////////////////////////////////////
 
 
 static struct usb_device *device;
-static struct usb_class_driver class;
-//static unsigned char bulk_buf[MAX_PKT_SIZE];  //change later	
+static struct usb_class_driver class;	
 
 struct led_classdev led;
      uint8_t brightness;
 
 ////////////////////////////////////////////////////
+/* Function: control_led
+   Working: This Callback function which supoports echo function added to the led structure*/
 
 static void control_led(struct led_classdev *led,
                 enum led_brightness brightness)
@@ -93,8 +87,11 @@ static void control_led(struct led_classdev *led,
 	}
 }
 
-//////////////////////////////////////////////////////////
-
+////////////////////////////////////////////////////////////
+/*
+	function: led_open
+	led file can be openned from userspace using this function
+*/
 static int led_open(struct inode *i, struct file *f)
 {
 	printk(KERN_INFO "UsbtoLed device loaded\n");
@@ -102,7 +99,10 @@ static int led_open(struct inode *i, struct file *f)
 }
 
 //////////////////////////////////////////////////////////////
-
+/*
+	function: led_close
+	led file can be closed from userspace using this function
+*/
 static int led_close(struct inode *i, struct file *f)
 {
 	printk(KERN_INFO "UsbtoLed device closed\n");
@@ -112,7 +112,10 @@ static int led_close(struct inode *i, struct file *f)
 //////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////
-
+/*
+	structure: file_operations
+	functionalities of led file are decided based on functions mapped to this structure
+*/
 static struct file_operations fops =
 {
 	.owner = THIS_MODULE,
@@ -123,8 +126,10 @@ static struct file_operations fops =
 };
 //////////////////////////////////////////////////////////////////////////
 
-
-
+/*
+	function: led_disconnect
+	this function is called whenever LED is disconnected from the PC
+*/
 static void led_disconnect(struct usb_interface *interface)
 {
 	
@@ -133,14 +138,20 @@ static void led_disconnect(struct usb_interface *interface)
 }
 
 
-
+/*
+	structure: usb_device_id
+	this driver supports the USB device with the mentioned VID and PID in this table
+*/
 static struct usb_device_id led_table[] =
 {
 	{ USB_DEVICE(0x16c0, 0x05dc) },
 	{} /* Terminating entry */
 };
 
-
+/*
+	function: led_probe
+	this function is called whenever LED is connected from the PC
+*/
 static int led_probe(struct usb_interface *interface, const struct usb_device_id *id)
 {
 	int retval;
@@ -164,7 +175,10 @@ static int led_probe(struct usb_interface *interface, const struct usb_device_id
 }
 
 MODULE_DEVICE_TABLE (usb, led_table);
-
+/*
+	structure: led_driver
+	this structure maps functions supported to the driver
+*/
 static struct usb_driver led_driver =
 {
 	.name = "led_driver",
@@ -172,7 +186,10 @@ static struct usb_driver led_driver =
 	.probe = led_probe,
 	.disconnect = led_disconnect,
 };
-
+/*
+	function: led_init
+	this function runs when the module is inserted
+*/
 static int __init led_init(void)
 {
 	int val;
@@ -189,6 +206,10 @@ static int __init led_init(void)
 	return 0;
 }
 
+/*
+	function: led_exit
+	the function runs when the driver is removed using rmmod
+*/
 static void __exit led_exit(void)
 {
 
