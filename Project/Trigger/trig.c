@@ -10,12 +10,18 @@
 #include<linux/sched.h>
 
 
-//#include "leds.h"
-
+/*
+	structure: triggerable_trig_data
+	functionalities like timer can be added to this structure
+*/
 struct triggerable_trig_data {
 //	struct timer_list timer;
 };
 
+/*
+	function: led_triggerable_function
+	initializzes brightness to 0	
+*/
 static void led_triggerable_function(unsigned long data)
 {
 	struct led_classdev *led_cdev = (struct led_classdev *) data;
@@ -23,6 +29,10 @@ static void led_triggerable_function(unsigned long data)
 	led_set_brightness(led_cdev, LED_OFF);
 }
 
+/*
+	function: trigger_store
+	this function is passed to DEVICE_ATTR()	
+*/
 static ssize_t trigger_store(struct device *dev,
 		struct device_attribute *attr, const char *buf, size_t size)
 {
@@ -39,9 +49,12 @@ static ssize_t trigger_store(struct device *dev,
 
 	return size;
 }
-
 static DEVICE_ATTR(trigger, 0200, NULL, trigger_store);
 
+/*
+	function: triggerable_trig_activate
+	this function is called when the triggeris aactivated	
+*/
 static void triggerable_trig_activate(struct led_classdev *led_cdev)
 {
 	int p;
@@ -58,18 +71,20 @@ static void triggerable_trig_activate(struct led_classdev *led_cdev)
 	printk("\nactivate5\n");
 
 	for(p=0;p<10;p++)
-{
-	led_set_brightness(led_cdev, LED_OFF);
-	printk("\nactivate6\n");
-	mdelay(500);
-	led_set_brightness(led_cdev, LED_FULL);
-	printk("\nactivate6\n");
-	mdelay(500);
-}
-	
-
+	{
+		led_set_brightness(led_cdev, LED_OFF);
+		printk("\nactivate6\n");
+		mdelay(500);
+		led_set_brightness(led_cdev, LED_FULL);
+		printk("\nactivate6\n");
+		mdelay(500);
+	}
 }
 
+/*
+	function: triggerable_trig_deactivate
+	this function is called when the triggeris deactivated	
+*/
 static void triggerable_trig_deactivate(struct led_classdev *led_cdev)
 {
 	struct triggerable_trig_data *kdata = led_cdev->trigger_data;
